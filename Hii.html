@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Troll</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #20232a url("gsdg.jpg") center / cover no-repeat fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-card {
+            width: min(100%, 380px);
+            padding: 32px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            color: #222;
+            text-align: center;
+        }
+
+        .intro,
+        .demo-note {
+            color: #555;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .intro {
+            margin: 0 0 24px;
+        }
+
+        label {
+            display: block;
+            margin: 16px 0 7px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            font: inherit;
+        }
+
+        input:focus {
+            outline: 3px solid rgba(0, 120, 212, 0.25);
+            border-color: #0078d4;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 12px;
+            border: 0;
+            border-radius: 8px;
+            background: #1769aa;
+            color: white;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #12558a;
+        }
+
+        .demo-note {
+            margin: 18px 0 0;
+            font-size: 0.9rem;
+        }
+
+        #message {
+            min-height: 1.5em;
+            margin: 14px 0 0;
+            color: #1769aa;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main class="login-card">
+        <h1>Welcome Back </h1>
+        <p class="intro">Sign in to continue</p>
+
+        <form id="loginForm">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" placeholder="Username" autocomplete="off" required>
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Password" autocomplete="off" required>
+
+            <button type="submit">Log in</button>
+            <p id="message" role="status" aria-live="polite"></p>
+        </form>
+
+        <a href="https://www.roblox.com" target="_blank"><p class="demo-note">Click For Official Roblox Website</p></a>
+    </main>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const loginButton = loginForm.querySelector('button[type="submit"]');
+        const passwordInput = document.getElementById('password');
+        const message = document.getElementById('message');
+        const submitSound = new Audio('you-are-an-idiot.mp3');
+        const backgroundImages = ['gg.jpg', 'ggg.png'];
+        let backgroundIndex = 0;
+        let backgroundInterval;
+
+        function changeBackground() {
+            backgroundIndex = (backgroundIndex + 1) % backgroundImages.length;
+            document.body.style.backgroundImage = `url("${backgroundImages[backgroundIndex]}")`;
+        }
+
+        loginButton.addEventListener('click', function() {
+            submitSound.currentTime = 0;
+            submitSound.play().catch(function(error) {
+                console.error('Unable to play submit sound:', error);
+            });
+            if (backgroundInterval === undefined) {
+                changeBackground();
+                backgroundInterval = window.setInterval(changeBackground, 2000);
+            }
+        });
+
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            passwordInput.value = '';
+            message.textContent = "you are not an idiot ";
+        });
+    </script>
+</body>
+</html>
